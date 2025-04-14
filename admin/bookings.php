@@ -4,52 +4,36 @@
     include('../includes/check-login.php');
     check_login();
     //code for registration
-    if (isset($_POST['submit'])) {
-        // Retrieve the registration number from the form
-        $regno = $_POST['regno'];
-    
-        // Check if the registration number already exists
-        $stmt = $mysqli->prepare("SELECT regno FROM registration WHERE regno = ?");
-        $stmt->bind_param('s', $regno);
+    if(isset($_POST['submit'])){
+        $roomno=$_POST['room'];
+        $seater=$_POST['seater'];
+        $feespm=$_POST['fpm'];
+        $foodstatus=$_POST['foodstatus'];
+        $stayfrom=$_POST['stayf'];
+        $duration=$_POST['duration'];
+        $course=$_POST['course'];
+        $regno=$_POST['regno'];
+        $fname=$_POST['fname'];
+        $mname=$_POST['mname'];
+        $lname=$_POST['lname'];
+        $gender=$_POST['gender'];
+        $contactno=$_POST['contact'];
+        $emailid=$_POST['email'];
+        $emcntno=$_POST['econtact'];
+        $gurname=$_POST['gname'];
+        $gurrelation=$_POST['grelation'];
+        $gurcntno=$_POST['gcontact'];
+        $caddress=$_POST['address'];
+        $ccity=$_POST['city'];
+        $cpincode=$_POST['pincode'];
+        $paddress=$_POST['paddress'];
+        $pcity=$_POST['pcity'];
+        $ppincode=$_POST['ppincode'];
+        $query="INSERT into  registration(roomno,seater,feespm,foodstatus,stayfrom,duration,course,regno,firstName,middleName,lastName,gender,contactno,emailid,egycontactno,guardianName,guardianRelation,guardianContactno,corresAddress,corresCIty,corresPincode,pmntAddress,pmntCity,pmntPincode) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $stmt = $mysqli->prepare($query);
+        $rc=$stmt->bind_param('iiiisissssssisissississi',$roomno,$seater,$feespm,$foodstatus,$stayfrom,$duration,$course,$regno,$fname,$mname,$lname,$gender,$contactno,$emailid,$emcntno,$gurname,$gurrelation,$gurcntno,$caddress,$ccity,$cpincode,$paddress,$pcity,$ppincode);
         $stmt->execute();
-        $stmt->store_result();
-    
-        // If the registration number exists, show an error message
-        if ($stmt->num_rows > 0) {
-            echo "<script>alert('Error: Registration number already booked!');</script>";
-        } else {
-            // Proceed with the booking if the registration number is not found
-            $roomno = $_POST['room'];
-            $seater = $_POST['seater'];
-            $feespm = $_POST['fpm'];
-            $foodstatus = $_POST['foodstatus'];
-            $stayfrom = $_POST['stayf'];
-            $duration = $_POST['duration'];
-            $course = $_POST['course'];
-            $fname = $_POST['fname'];
-            $mname = $_POST['mname'];
-            $lname = $_POST['lname'];
-            $gender = $_POST['gender'];
-            $contactno = $_POST['contact'];
-            $emailid = $_POST['email'];
-            $emcntno = $_POST['econtact'];
-            $gurname = $_POST['gname'];
-            $gurrelation = $_POST['grelation'];
-            $gurcntno = $_POST['gcontact'];
-            $caddress = $_POST['address'];
-            $ccity = $_POST['city'];
-            $cpincode = $_POST['pincode'];
-            $paddress = $_POST['paddress'];
-            $pcity = $_POST['pcity'];
-            $ppincode = $_POST['ppincode'];
-    
-            $query = "INSERT INTO registration(roomno, seater, feespm, foodstatus, stayfrom, duration, course, regno, firstName, middleName, lastName, gender, contactno, emailid, emergencyContactNo, guardianName, guardianRelation, guardianContactNo, corresAddress, corresCity, corresPincode, pmntAddress, pmntCity, pmntPincode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            $stmt = $mysqli->prepare($query);
-            $rc = $stmt->bind_param('iiiisissssssisissississi', $roomno, $seater, $feespm, $foodstatus, $stayfrom, $duration, $course, $regno, $fname, $mname, $lname, $gender, $contactno, $emailid, $emcntno, $gurname, $gurrelation, $gurcntno, $caddress, $ccity, $cpincode, $paddress, $pcity, $ppincode);
-            $stmt->execute();
-            echo "<script>alert('Success: Booked!');</script>";
-        }
-        $stmt->close();
+        echo"<script>alert('Success: Booked!');</script>";
     }
 ?>
 
@@ -279,43 +263,43 @@
                         <div class="card">
                         <div class="card-body">
                                 <h4 class="card-title">Food Status</h4>
-                                                                    <!-- Food Status -->
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="customRadio1" value="1" name="foodstatus" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadio1">Required <code>Extra RS.5k Per Month</code></label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="customRadio2" value="0" name="foodstatus" class="custom-control-input" checked>
-                                        <label class="custom-control-label" for="customRadio2">Not Required</label>
-                                    </div>
-                                                                    
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio1" value="1" name="foodstatus"
+                                        class="custom-control-input">
+                                    <label class="custom-control-label" for="customRadio1">Required <code>Extra Rs.5k Per Month</code></label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio2" value="0" name="foodstatus"
+                                        class="custom-control-input" checked>
+                                    <label class="custom-control-label" for="customRadio2">Not Required</label>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
 
 
                     <div class="col-sm-12 col-md-6 col-lg-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Total Fees Per Month</h4>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Total Fees Per Month</h4>
                                     <div class="form-group">
-                                    <input type="text" name="fpm" id="fpm" placeholder="Your total fees" class="form-control">
+                                        <input type="text" name="fpm" id="fpm" placeholder="Your total fees" class="form-control">
                                     </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
 
-                    <div class="col-sm-12 col-md-6 col-lg-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Total Amount</h4>
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Total Amount</h4>
                                     <div class="form-group">
-                                    <input type="text" name="ta" id="ta" placeholder="Total Amount here.." required class="form-control">
+                                        <input type="text" name="ta" id="ta" placeholder="Total Amount here.." required class="form-control" readonly>
                                     </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
                   
                 
                 </div>
@@ -377,13 +361,13 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Email</h4>
-                                    <div class="form-group">
-                                        <input type="email" name="email" id="email" placeholder="Enter email address" class="form-control" required>
-                                    </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" id="email" placeholder="Enter email address" class="form-control" required>
+                                    <small id="emailError" class="text-danger" style="display:none;">Please enter a valid email address.</small>
+                                </div>
                             </div>
                         </div>
                     </div>
-
 
                     <div class="col-sm-12 col-md-6 col-lg-4">
                         <div class="card">
@@ -406,9 +390,10 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Contact Number</h4>
-                                    <div class="form-group">
-                                        <input type="text" name="contact" id="contact" placeholder="Enter contact number" class="form-control" required>
-                                    </div>
+                                <div class="form-group">
+                                    <input type="text" name="contact" id="contact" placeholder="Enter Contact Number" class="form-control" required>
+                                    <small id="contactError" class="text-danger" style="display:none;">Please enter a valid 10-digit contact number.</small>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -419,9 +404,10 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Emergency Contact Number</h4>
-                                    <div class="form-group">
-                                        <input type="text" name="econtact" id="econtact" placeholder="Enter emergency contact number" class="form-control" required>
-                                    </div>
+                                <div class="form-group">
+                                    <input type="text" name="econtact" id="econtact" placeholder="Enter Emergency Contact Number" class="form-control" required>
+                                    <small id="econtactError" class="text-danger" style="display:none;">Please enter a valid 10-digit contact number.</small>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -483,10 +469,11 @@
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Contact Number</h4>
-                                        <div class="form-group">
-                                            <input type="text" name="gcontact" id="gcontact" required class="form-control" placeholder="Enter Guardian's Contact No.">
-                                        </div>
+                                    <h4 class="card-title">Guardian's Contact Number</h4>
+                                    <div class="form-group">
+                                        <input type="text" name="gcontact" id="gcontact" placeholder="Enter Guardian's Contact Number" class="form-control" required>
+                                        <small id="gcontactError" class="text-danger" style="display:none;">Please enter a valid 10-digit contact number.</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -670,130 +657,100 @@
     </script>
 
 <script>
-   document.addEventListener("DOMContentLoaded", function () {
-    const durationSelect = document.getElementById("duration");
-    const feesPerMonthInput = document.getElementById("fpm");
-    const totalAmountInput = document.getElementById("ta");
-    const foodStatusRadios = document.getElementsByName("foodstatus");
-
     function calculateTotalAmount() {
-        totalAmountInput.disabled = false; // Enable the total amount input field for recalculation
-        const duration = parseInt(durationSelect.value) || 0; // Get duration value
-        const feesPerMonth = parseFloat(feesPerMonthInput.value) || 0; // Get fees per month value
-        let foodCost = 0;
+        const feesPerMonth = parseFloat(document.getElementById('fpm').value) || 0;
+        const duration = parseInt(document.getElementById('duration').value) || 0;
+        const foodStatus = document.querySelector('input[name="foodstatus"]:checked').value; // Get the selected food status
+        let totalAmount = feesPerMonth * duration;
 
-        // Check if food is required
-        for (let i = 0; i < foodStatusRadios.length; i++) {
-            if (foodStatusRadios[i].checked && foodStatusRadios[i].value === "1") {
-                foodCost = 5000; // Additional cost for food per month
-                break;
-            }
+        // If food is required, add the additional fee
+        if (foodStatus === "1") {
+            totalAmount += 5000 * duration; // Assuming Rs. 5000 extra per month for food
         }
 
-        const totalAmount = (feesPerMonth + foodCost) * duration; // Calculate total amount
-        totalAmountInput.value = totalAmount.toFixed(2); // Update total amount field
-        totalAmountInput.disabled = true; // Disable the total amount input field
+        document.getElementById('ta').value = totalAmount.toFixed(2);
     }
 
-    // Add event listeners to recalculate total amount on change
-    durationSelect.addEventListener("change", calculateTotalAmount);
-    feesPerMonthInput.addEventListener("input", calculateTotalAmount);
-    for (let i = 0; i < foodStatusRadios.length; i++) {
-        foodStatusRadios[i].addEventListener("change", calculateTotalAmount);
-    }
-});
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const contactInput = document.getElementById("contact");
-
-        contactInput.addEventListener("input", function () {
-            const contact = contactInput.value.trim();
-            const pattern = /^[6-9]\d{9}$/; // Indian mobile number format
-
-            if (contact === "") {
-                contactInput.setCustomValidity("Contact number is required.");
-            } else if (!pattern.test(contact)) {
-                contactInput.setCustomValidity("Please enter a valid 10-digit Indian contact number.");
-            } else {
-                contactInput.setCustomValidity("");
-            }
-
-            contactInput.reportValidity(); // Real-time feedback
-        });
-    });
-</script>
-
-  
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const contactInput = document.getElementById("gcontact");
-
-        contactInput.addEventListener("input", function () {
-            const contact = contactInput.value.trim();
-            const contactPattern = /^[6-9]\d{9}$/; // Valid Indian mobile number format
-
-            if (contact === "") {
-                contactInput.setCustomValidity("Contact number is required.");
-            } else if (!contactPattern.test(contact)) {
-                contactInput.setCustomValidity("Please enter a valid 10-digit Indian contact number.");
-            } else {
-                contactInput.setCustomValidity("");
-            }
-
-            contactInput.reportValidity(); // Show validation message in real time
-        });
+    // Event listeners for calculating total amount
+    document.getElementById('fpm').addEventListener('input', calculateTotalAmount);
+    document.getElementById('duration').addEventListener('change', calculateTotalAmount);
+    
+    // Add event listeners for food status radio buttons
+    const foodStatusRadios = document.querySelectorAll('input[name="foodstatus"]');
+    foodStatusRadios.forEach(radio => {
+        radio.addEventListener('change', calculateTotalAmount);
     });
 </script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const emergencyInput = document.getElementById("econtact");
+    function validateContactNumber(inputField, errorField) {
+        const contactNumber = inputField.value.trim();
+        const regex = /^[6-9]\d{9}$/; // Valid Indian mobile number format
 
-        emergencyInput.addEventListener("input", function () {
-            const value = emergencyInput.value.trim();
-            const pattern = /^[6-9]\d{9}$/;
+        if (!regex.test(contactNumber)) {
+            errorField.style.display = 'block'; // Show error message
+            inputField.classList.add('is-invalid'); // Add invalid class for styling
+        } else {
+            errorField.style.display = 'none'; // Hide error message
+            inputField.classList.remove('is-invalid'); // Remove invalid class
+        }
+    }
+    
+    function validateEmail(inputField, errorField) {
+        const email = inputField.value.trim();
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email pattern
 
-            if (value === "") {
-                emergencyInput.setCustomValidity("Emergency contact number is required.");
-            } else if (!pattern.test(value)) {
-                emergencyInput.setCustomValidity("Please enter a valid 10-digit Indian contact number.");
-            } else {
-                emergencyInput.setCustomValidity("");
-            }
+        if (!regex.test(email)) {
+            errorField.style.display = 'block'; // Show error message
+            inputField.classList.add('is-invalid'); // Add invalid class for styling
+        } else {
+            errorField.style.display = 'none'; // Hide error message
+            inputField.classList.remove('is-invalid'); // Remove invalid class
+        }
+    }
 
-            emergencyInput.reportValidity(); // Show feedback in real time
-        });
+    // Validate email
+    document.getElementById('email').addEventListener('input', function() {
+        validateEmail(this, document.getElementById('emailError'));
+    });
+
+    // Validate main contact number
+    document.getElementById('contact').addEventListener('input', function() {
+        validateContactNumber(this, document.getElementById('contactError'));
+    });
+
+    // Validate emergency contact number
+    document.getElementById('econtact').addEventListener('input', function() {
+        validateContactNumber(this, document.getElementById('econtactError'));
+    });
+
+    // Validate guardian's contact number
+    document.getElementById('gcontact').addEventListener('input', function() {
+        validateContactNumber(this, document.getElementById('gcontactError'));
     });
 </script>
 
-  
-
-    <!-- Real-time email validation script -->
+<style>
+    .is-invalid {
+        border: 1px solid red; /* Red border for invalid input */
+    }
+</style>
+    
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const emailInput = document.getElementById("email");
-
-            emailInput.addEventListener("input", function () {
-                const email = emailInput.value.trim();
-                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-                if (email === "") {
-                    emailInput.setCustomValidity("Email is required.");
-                } else if (!emailPattern.test(email)) {
-                    emailInput.setCustomValidity("Please enter a valid email address.");
-                } else {
-                    emailInput.setCustomValidity("");
-                }
-
-                emailInput.reportValidity(); // Shows error in real-time
+        function checkAvailability() {
+        $("#loaderIcon").show();
+        jQuery.ajax({
+        url: "check-availability.php",
+        data:'roomno='+$("#room").val(),
+        type: "POST",
+        success:function(data){
+            $("#room-availability-status").html(data);
+            $("#loaderIcon").hide();
+        },
+            error:function (){}
             });
-        });
+        }
     </script>
-
-</body>
-</html>
 
 
     <script type="text/javascript">
